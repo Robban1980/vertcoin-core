@@ -156,31 +156,6 @@ If you do not reference --prefix=$PWD/depends for the ./configure depending on t
 be wrong, forcing you to build with the flag --with-incompatible-bdb. This would result in the wallet not being compatible with the official distrubutions
 database if you run them on the same system.
 
-## Boost reference issues
-
-If you experience issues with make failing to build, with references to boost like the following error,
-
-	crypto/.libs/libbitcoinconsensus_la-scrypt.o:scrypt.cpp:(.text.startup+0x17): undefined reference to `boost::system::generic_category()'
-
-This means your version of boost is newer than version 1.65. To address this issue you must edit configure.ac, to change the order of boost build order.
-Edit configure.ac go to line 772, if it looks like this
-
-	AX_BOOST_SYSTEM
-	AX_BOOST_FILESYSTEM
-	AX_BOOST_PROGRAM_OPTIONS
-	AX_BOOST_THREAD
-	AX_BOOST_CHRONO
-	
-change it to be this
-
-	AX_BOOST_FILESYSTEM
-	AX_BOOST_PROGRAM_OPTIONS
-	AX_BOOST_THREAD
-	AX_BOOST_CHRONO
-	AX_BOOST_SYSTEM
-
-After this save the file and re-execute the ./configure and make steps.
-
 ## Depends system
 
 For further documentation on the depends system see [README.md](../depends/README.md) in the depends directory.
